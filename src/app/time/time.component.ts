@@ -34,7 +34,8 @@ export class TimeComponent implements OnInit {
     let date = new Date();
     let hour = date.getHours();
     if (hour >= 12) { this.ampm = "PM" } else { this.ampm = "AM" };
-    if (hour == 0) { hour = 12 } else if (hour > 12) { hour = hour - 12 };
+    if (hour == 0) { hour = 12 };
+    if (hour > 12) { hour = hour - 12 };
     this.hour = date.getHours().toString();
     this.minute = ('0' + date.getMinutes()).slice(-2);
     //this.second = ('0' + date.getSeconds()).slice(-2);
