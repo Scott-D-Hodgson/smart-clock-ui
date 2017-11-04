@@ -1,5 +1,14 @@
-div {
+.well {
     z-index: 1;  
     background-color: RGBA(0,0,0,0.5);
     color: white;
+    height: 60vh;    
+}
+
+.well h1 {
+    font-size: 20vh;
+}
+
+.well p {
+    font-size: 5vh;
 }
