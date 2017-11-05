@@ -1,14 +1,27 @@
-.well {
+div {
+    z-index: 1;  
+    background-color: RGBA(0,0,0,0);
+    color: white;
+}
+
+hr {
+    color: white;
+    border-color: white;
+    border-style: solid none;
+    border-width: 1px 0;
+    margin: 1px;
+}
+
+.clock {
     z-index: 1;  
     background-color: RGBA(0,0,0,0.5);
     color: white;
-    /* height: 60vh; */
 }
 
-.well h1 {
+.clock h1 {
     font-size: 20vh;
 }
 
-.well p {
+.clock p {
     font-size: 5vh;
 }

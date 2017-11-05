@@ -14,7 +14,12 @@ export class ForecastComponent implements OnInit {
 
   constructor(private openWeatherService : OpenWeatherService) { 
       this.openWeatherService.ForecastChange.subscribe(value => {
-        this._forecast = value;
+        this._forecast = [];
+        let length = 8;
+        if (value.length < length) { length = value.length };
+        for (let i = 0; i < length; i++) {
+          this._forecast.push(value[i]);
+        };
         console.log('Forecast Component got results!');
       });
     }

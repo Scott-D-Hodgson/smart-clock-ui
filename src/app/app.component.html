@@ -1,15 +1,17 @@
 <app-wallpaper></app-wallpaper>
 <div class="row">
-    <div class="col-sm-12 col-md-2 well text-center">
-        <h2>Weather</h2>
+    <div class="col-sm-12 col-md-2 text-center">
         <app-weather></app-weather>
+        <div>
+            &nbsp;<hr>&nbsp;
+        </div>
+        <app-forecast></app-forecast>        
     </div>
-    <div class="col-sm-12 col-md-8 well text-center">
+    <div class="col-sm-12 col-md-8 well well-sm clock text-center">
         <h1><app-time></app-time></h1>
         <p><app-date></app-date></p>
     </div>
-    <div class="col-sm-12 col-md-2 well text-center">
-        <h2>Forecast</h2>
-        <app-forecast></app-forecast>
+    <div class="col-sm-12 col-md-2 text-center">
+
     </div>
 </div>

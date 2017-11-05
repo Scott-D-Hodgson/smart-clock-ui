@@ -5,10 +5,10 @@ ul {
 
 li {
     padding: 5px;
-    display: inline-block;
-    border-radius: 2px;
+    display: block;
+    /* border-radius: 2px;
     border-color: white;
     border-style: solid;
-    border-width: 1px;
+    border-width: 1px; */
     margin: 2px;
 }

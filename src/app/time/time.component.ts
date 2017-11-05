@@ -9,35 +9,21 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 })
 export class TimeComponent implements OnInit {
 
-  private hour: string; 
-  private minute: string;
-  private ampm: string;
-  //private second: string;
+  private _time : Date;
   private subscription: Subscription;
 
-  constructor() { 
-    this.timerUpdate(); 
+  constructor() {
+    this._time = new Date();
   }
 
   ngOnInit() {
     let timer = TimerObservable.create(60000, 60000);
     this.subscription = timer.subscribe(t => {
-      this.timerUpdate();
+      this._time = new Date();
     })
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  private timerUpdate() {
-    let date = new Date();
-    let hour = date.getHours();
-    if (hour >= 12) { this.ampm = "PM" } else { this.ampm = "AM" };
-    if (hour == 0) { hour = 12 };
-    if (hour > 12) { hour = hour - 12 };
-    this.hour = date.getHours().toString();
-    this.minute = ('0' + date.getMinutes()).slice(-2);
-    //this.second = ('0' + date.getSeconds()).slice(-2);
   }
 }

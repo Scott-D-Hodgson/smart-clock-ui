@@ -1,3 +1,18 @@
-<p *ngIf="_weather">
-  {{ _weather.current }}
-</p>
+<div class="col-sm-12" *ngIf="_weather">
+  <h2>    <i *ngIf="(_weather.id > 800) && (_weather.id < 900)" class="fa fa-cloud" aria-hidden="true"></i>
+    <i *ngIf="(_weather.id >= 500) && (_weather.id < 600)" class="fa fa-tint" aria-hidden="true"></i>
+    <i *ngIf="(_weather.id == 800)" class="fa fa-sun-o" aria-hidden="true"></i>
+    <i *ngIf="(_weather.id >= 600) && (_weather.id < 700)" class="fa fa-snowflake-o" aria-hidden="true"></i>
+    {{ _weather.temperature | celcius }}&deg;C
+  </h2>
+  <p>{{ _weather.current }}</p>
+  <p>{{ _weather.description }}</p>
+  <div class="col-sm-6">
+    <h2><i class="fa fa-sun-o" aria-hidden="true"></i></h2>
+    <p>{{ _weather.sunrise | time }}</p>
+  </div>
+  <div class="col-sm-6">
+    <h2><i class="fa fa-moon-o" aria-hidden="true"></i></h2>
+    <p>{{ _weather.sunset | time }}</p>
+  </div> 
+</div>

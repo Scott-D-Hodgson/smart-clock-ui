@@ -4,11 +4,14 @@ import { Forecast } from '../model/forecast';
 import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { Weather } from '../model/weather';
+import { Subscription } from 'rxjs/Subscription';
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 @Injectable()
 export class OpenWeatherService {
 
   private key : string;
+  private subscription : Subscription;
   public Forecast : Forecast[];
   ForecastChange: Subject<Forecast[]> = new Subject<Forecast[]>();
   public Weather : Weather;
@@ -26,9 +29,29 @@ export class OpenWeatherService {
     this.configurationService.OpenWeatherKeyChange.subscribe(value => {
       this.key = value;
       console.log('OpenWeather Service got value: ' + value);
-      this.getWeather();
-      this.getForecast();      
+      let timer = TimerObservable.create(0, 60000);
+      if (this.subscription != null) {
+        this.subscription.unsubscribe();
+      };
+      this.subscription = timer.subscribe(t => {
+        this.timerUpdate();
+      })
     });
+  }
+
+  ngOnInit() {
+
+  }
+
+  ngOnDestroy() {
+    if (this.subscription != null) {
+      this.subscription.unsubscribe();
+    };
+  }
+
+  private timerUpdate() {
+    this.getWeather();
+    this.getForecast();
   }
 
   public getForecast() {
@@ -75,7 +98,7 @@ export class OpenWeatherService {
               if(raw["list"][i].hasOwnProperty("snow")) {
                 forecast.snow = raw["list"][i]["snow"]["3h"];
               };
-              //console.log(JSON.stringify(forecast));
+              console.log(JSON.stringify(forecast));
               forecasts.push(forecast);
             };              
           };

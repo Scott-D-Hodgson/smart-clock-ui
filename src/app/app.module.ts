@@ -10,6 +10,8 @@ import { HttpModule } from '@angular/http';
 import { OpenWeatherService } from './services/open-weather.service';
 import { ConfigurationService } from './services/configuration.service';
 import { WeatherComponent } from './weather/weather.component';
+import { CelciusPipe } from './pipes/celcius.pipe';
+import { TimePipe } from './pipes/time.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { WeatherComponent } from './weather/weather.component';
     DateComponent,
     WallpaperComponent,
     ForecastComponent,
-    WeatherComponent
+    WeatherComponent,
+    CelciusPipe,
+    TimePipe
   ],
   imports: [
     BrowserModule,
