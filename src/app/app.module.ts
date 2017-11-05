@@ -12,6 +12,8 @@ import { ConfigurationService } from './services/configuration.service';
 import { WeatherComponent } from './weather/weather.component';
 import { CelciusPipe } from './pipes/celcius.pipe';
 import { TimePipe } from './pipes/time.pipe';
+import { QuoteComponent } from './quote/quote.component';
+import { TheySaidSoService } from './services/they-said-so.service';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,14 @@ import { TimePipe } from './pipes/time.pipe';
     ForecastComponent,
     WeatherComponent,
     CelciusPipe,
-    TimePipe
+    TimePipe,
+    QuoteComponent
   ],
   imports: [
     BrowserModule,
     HttpModule
   ],
-  providers: [ConfigurationService, OpenWeatherService],
+  providers: [ConfigurationService, OpenWeatherService, TheySaidSoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
