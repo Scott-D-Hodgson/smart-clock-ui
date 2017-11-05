@@ -5,18 +5,26 @@ import { AppComponent } from './app.component';
 import { TimeComponent } from './time/time.component';
 import { DateComponent } from './date/date.component';
 import { WallpaperComponent } from './wallpaper/wallpaper.component';
+import { ForecastComponent } from './forecast/forecast.component';
+import { HttpModule } from '@angular/http';
+import { OpenWeatherService } from './services/open-weather.service';
+import { ConfigurationService } from './services/configuration.service';
+import { WeatherComponent } from './weather/weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimeComponent,
     DateComponent,
-    WallpaperComponent
+    WallpaperComponent,
+    ForecastComponent,
+    WeatherComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [ConfigurationService, OpenWeatherService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
