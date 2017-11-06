@@ -12,3 +12,7 @@ li {
     border-width: 1px; */
     margin: 2px;
 }
+
+table {
+    width: 100%;
+}

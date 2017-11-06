@@ -1,23 +1,15 @@
 <div *ngIf="_forecast">
-  <div class="col-sm-12" *ngFor="let item of _forecast">
-    <div class="col-sm-4">
-      <p class="text-left">
-        {{ item.dateTime | time }}
-      </p>
-    </div>
-    <div class="col-sm-3">
-      <p class="text-left">        
-        {{ item.temperature | celcius }}&deg;C
-      </p>
-    </div>
-    <div class="col-sm-5">
-      <p class="text-left">
-        <i *ngIf="(item.id > 800) && (item.id < 900)" class="fa fa-cloud" aria-hidden="true"></i>
-        <i *ngIf="(item.id >= 500) && (item.id < 600)" class="fa fa-tint" aria-hidden="true"></i>
-        <i *ngIf="(item.id == 800)" class="fa fa-sun-o" aria-hidden="true"></i>
-        <i *ngIf="(item.id >= 600) && (item.id < 700)" class="fa fa-snowflake-o" aria-hidden="true"></i>
-        &nbsp;{{ item.prediction }}
-      </p>
-    </div>
-  </div>
+  <table>
+    <tr *ngFor="let item of _forecast">
+      <td class="text-left">{{ item.dateTime | time }}</td>
+      <td class="text-left">{{ item.temperature | celcius }}&deg;C</td>
+      <td class="text-center">
+          <i *ngIf="(item.id > 800) && (item.id < 900)" class="fa fa-cloud" aria-hidden="true"></i>
+          <i *ngIf="(item.id >= 500) && (item.id < 600)" class="fa fa-tint" aria-hidden="true"></i>
+          <i *ngIf="(item.id == 800)" class="fa fa-sun-o" aria-hidden="true"></i>
+          <i *ngIf="(item.id >= 600) && (item.id < 700)" class="fa fa-snowflake-o" aria-hidden="true"></i>
+      </td>
+      <td class="text-left">{{ item.prediction }}</td>
+    </tr>
+  </table>
 </div>

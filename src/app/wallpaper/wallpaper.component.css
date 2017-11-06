@@ -1,5 +1,4 @@
 .wallpaper {
-    /* background-image: URL('http://clock/wallpapers/1.jpg'); */
     background-size:cover;
     height: 100vh;
     width: 100vw;
@@ -7,4 +6,16 @@
     top:0;
     left:0;  
     z-index: 0;  
+}
+
+.frame {
+    border-width: 1px;
+    border-color: white;
+    border-style: solid;
+    height: 480px;
+    width: 800px;
+    position:fixed;
+    top:0;
+    left:0;  
+    z-index: 100;  
 }
