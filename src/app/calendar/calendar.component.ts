@@ -10,8 +10,10 @@ import { TimerPulseService } from '../services/timer-pulse.service';
 export class CalendarComponent implements OnInit {
 
   private _date : Date;
-  private _dateStart : Date;
-  private _dateEnd : Date;
+  private _monthStart : Date;
+  private _monthEnd : Date;
+  private _calendarStart : Date;
+  private _calendarEnd : Date;  
   private _subscriptionHour: Subscription;
   
   constructor(private timerPulseService : TimerPulseService) {
@@ -31,13 +33,17 @@ export class CalendarComponent implements OnInit {
   }
 
   private CalculateRange() {
-    let date : Date = new Date();
-    date.setDate(this._date.getDate() - (7 - this._date.getDay()))
-    this._dateStart = date;
-    date.setDate(this._date.getDate() - (7 - this._date.getDay()))  
-    this._dateEnd = date;
-    console.log("StartDay:" + this._dateStart.toLocaleDateString());
-    console.log("EndDay:" + this._dateEnd.getDay());
+    this._monthStart = new Date(this._date.getFullYear(), this._date.getMonth(), 1);
+    this._monthEnd = new Date(this._date.getFullYear(), this._date.getMonth() + 1, 0);
+    this._calendarStart = new Date(this._date.getFullYear(), this._date.getMonth(), (this._monthStart.getDay() - 5));
+    this._calendarEnd = new Date(this._date.getFullYear(), this._date.getMonth() + 1, (6 - this._monthEnd.getDay()));
+    //this._monthEnd = new Date(this._date.getFullYear(), this._date.getMonth() + 1, 0);
+    console.log("CalendarComponent:MonthStartDate->" + this._monthStart.toLocaleDateString());
+    console.log("CalendarComponent:MonthStartDay->" + this._monthStart.getDay());
+    console.log("CalendarComponent:MonthEndDate->" + this._monthEnd.toLocaleDateString());
+    console.log("CalendarComponent:MonthEndDay->" + this._monthEnd.getDay());
+    console.log("CalendarComponent:CalendarStartDate->" + this._calendarStart.toLocaleDateString());
+    console.log("CalendarComponent:CalendarEndDate->" + this._calendarEnd.toLocaleDateString());
   }
 
 }

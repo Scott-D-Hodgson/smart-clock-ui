@@ -15,29 +15,29 @@ export class TimerPulseService {
   private _subscriptionMinute : Subscription;
   DayChange: Subject<number> = new Subject<number>();    
   HourChange: Subject<number> = new Subject<number>();  
-  MinuteChange: Subject<number> = new Subject<number>();  
+  MinuteChange: Subject<number> = new Subject<number>(); 
 
   constructor() {
     let date = new Date();
     this._day = date.getDate();
     this._hour = date.getHours();
     this._minute = date.getMinutes();
-    let timer = TimerObservable.create(0, 60000);
+    let timer = TimerObservable.create(0, 1000);
     this._subscriptionTimer = timer.subscribe(t => {
       this.triggerPulses();
     });
     this._subscriptionDay = this.DayChange.subscribe(value => {
       this._day = value;
-      console.log('TimerPulseService:DayChanged');
+      console.log('TimerPulseService:DayChanged->' + value);
     });    
     this._subscriptionHour = this.HourChange.subscribe(value => {
       this._hour = value;
-      console.log('TimerPulseService:HourChanged');
+      console.log('TimerPulseService:HourChanged->' + value);
     });
     this._subscriptionMinute = this.MinuteChange.subscribe(value => {
       this._minute = value;
-      console.log('TimerPulseService:MinuteChanged');
-    });    
+      console.log('TimerPulseService:MinuteChanged->' + value);
+    });
   }
 
   ngOnDestroy() {
@@ -52,7 +52,7 @@ export class TimerPulseService {
     };
     if (this._subscriptionMinute != null) {
       this._subscriptionMinute.unsubscribe();
-    };        
+    };
   }
 
   private triggerPulses() {
@@ -65,7 +65,7 @@ export class TimerPulseService {
     }
     if (this._minute != date.getMinutes()) {
       this.MinuteChange.next(date.getMinutes());
-    }    
+    }
   }
 
 }
