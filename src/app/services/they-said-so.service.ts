@@ -42,7 +42,7 @@ export class TheySaidSoService {
         let raw : Object;
         raw = <Object>value.json();
         if (raw != null) {
-          console.log(JSON.stringify(raw));
+          //console.log(JSON.stringify(raw));
           if(raw.hasOwnProperty("contents")){
             //console.log(raw["list"].length);
             if(raw["contents"].hasOwnProperty("quotes")) {
@@ -57,7 +57,7 @@ export class TheySaidSoService {
             };
           };
         };     
-        console.log(JSON.stringify(quote));
+        //console.log(JSON.stringify(quote));
         this.QuoteChange.next(quote);
       });
     }

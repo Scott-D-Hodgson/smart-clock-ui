@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import {TimerObservable} from "rxjs/observable/TimerObservable";
+import { TimerPulseService } from '../services/timer-pulse.service';
 
 @Component({
   selector: 'app-time',
@@ -10,20 +10,20 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 export class TimeComponent implements OnInit {
 
   private _time : Date;
-  private subscription: Subscription;
+  private _subscriptionMinute: Subscription;
 
-  constructor() {
+  constructor(private timerPulseService : TimerPulseService) {
     this._time = new Date();
+    console.log("TimeComponent:TimeUpdated->" + this._time.toLocaleTimeString());
+    this._subscriptionMinute = this.timerPulseService.MinuteChange.subscribe(value => {
+      this._time = new Date();
+      console.log("TimeComponent:TimeUpdated->" + this._time.toLocaleTimeString());
+    });    
   }
 
-  ngOnInit() {
-    let timer = TimerObservable.create(60000, 60000);
-    this.subscription = timer.subscribe(t => {
-      this._time = new Date();
-    })
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this._subscriptionMinute.unsubscribe();
   }
 }

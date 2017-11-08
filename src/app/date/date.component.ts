@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { TimerPulseService } from '../services/timer-pulse.service';
 
 @Component({
   selector: 'app-date',
@@ -9,31 +9,21 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
 })
 export class DateComponent implements OnInit {
 
-  private day: string; 
-  private month: string;
-  private year: string;
-  private subscription: Subscription;
+  private _date: Date; 
+  private _subscriptionHour: Subscription;
 
-  constructor() { 
-    this.timerUpdate();   
+  constructor(private timerPulseService : TimerPulseService) {
+    this._date = new Date();
+    console.log("DateComponent:DateUpdated->" + this._date.toLocaleDateString());
+    this._subscriptionHour = this.timerPulseService.HourChange.subscribe(value => {
+      this._date = new Date();
+      console.log("DateComponent:DateUpdated->" + this._date.toLocaleDateString());
+    });    
   }
 
-  ngOnInit() {
-    let timer = TimerObservable.create(60000, 60000);
-    this.subscription = timer.subscribe(t => {
-      this.timerUpdate();
-    })
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this._subscriptionHour.unsubscribe();
   }
-
-  private timerUpdate() {
-    let date = new Date();
-    this.day = ('0' + date.getDate()).slice(-2);
-    this.month = ('0' + (date.getMonth() + 1)).slice(-2);
-    this.year = date.getFullYear().toString();
-  }
-
 }

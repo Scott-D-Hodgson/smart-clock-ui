@@ -5,57 +5,56 @@ import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 import { Weather } from '../model/weather';
 import { Subscription } from 'rxjs/Subscription';
-import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { TimerPulseService } from './timer-pulse.service';
 
 @Injectable()
 export class OpenWeatherService {
 
-  private key : string;
-  private subscription : Subscription;
-  public Forecast : Forecast[];
+  private _key : string;
+  private _subscriptionConfiguration : Subscription;
+  private _subscriptionHour : Subscription;
+  private _forecast : Forecast[];
+  private _weather : Weather;
   ForecastChange: Subject<Forecast[]> = new Subject<Forecast[]>();
-  public Weather : Weather;
   WeatherChange: Subject<Weather> = new Subject<Weather>();
 
-  constructor(private configurationService : ConfigurationService, private http : Http ) { 
+  constructor(private configurationService : ConfigurationService, private timerPulseService : TimerPulseService, private http : Http ) { 
     this.ForecastChange.subscribe(value => {
-      this.Forecast = value;
-      console.log('Forecast Changed');
+      this._forecast = value;
+      console.log('OpenWeatherService:ForecastChanged');
     });   
     this.WeatherChange.subscribe(value => {
-      this.Weather = value;
-      console.log('Weather Changed');
+      this._weather = value;
+      console.log('OpenWeatherService:WeatherChanged');
     });     
     this.configurationService.OpenWeatherKeyChange.subscribe(value => {
-      this.key = value;
-      console.log('OpenWeather Service got value: ' + value);
-      let timer = TimerObservable.create(0, 60000);
-      if (this.subscription != null) {
-        this.subscription.unsubscribe();
-      };
-      this.subscription = timer.subscribe(t => {
-        this.timerUpdate();
-      })
+      this._key = value;
+      console.log('OpenWeatherService:KeyChanged->' + value);
+      this.updateWeather();
+      this._subscriptionHour = timerPulseService.HourChange.subscribe(value => {
+        this.updateWeather();
+      });
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
-    if (this.subscription != null) {
-      this.subscription.unsubscribe();
+    if (this._subscriptionConfiguration != null) {
+      this._subscriptionConfiguration.unsubscribe();
     };
+    if (this._subscriptionHour != null) {
+      this._subscriptionHour.unsubscribe();
+    };    
   }
 
-  private timerUpdate() {
+  private updateWeather() {
     this.getWeather();
     this.getForecast();
   }
 
   public getForecast() {
-    let url = "http://api.openweathermap.org/data/2.5/forecast?id=6094817&APPID=" + this.key;
+    let url = "http://api.openweathermap.org/data/2.5/forecast?id=6094817&APPID=" + this._key;
     try
     {
       let forecasts : Forecast[] = [];
@@ -98,7 +97,7 @@ export class OpenWeatherService {
               if(raw["list"][i].hasOwnProperty("snow")) {
                 forecast.snow = raw["list"][i]["snow"]["3h"];
               };
-              console.log(JSON.stringify(forecast));
+              //console.log(JSON.stringify(forecast));
               forecasts.push(forecast);
             };              
           };
@@ -109,19 +108,19 @@ export class OpenWeatherService {
     }
     catch(ex)
     { 
-      console.log('Error getting forecast.');
+      console.log('OpenWeatherService:ForecastError');
     }
   }
 
   public getWeather() {
-    let url = "http://api.openweathermap.org/data/2.5/weather?id=6094817&APPID=" + this.key;
+    let url = "http://api.openweathermap.org/data/2.5/weather?id=6094817&APPID=" + this._key;
     try
     {
       this.http.get(url).subscribe((value: Response) => {
         let raw : Object;
         raw = <Object>value.json();
         if (raw != null) {
-          console.log(JSON.stringify(raw));
+          //console.log(JSON.stringify(raw));
           let weather : Weather = <Weather>{};
           if(raw.hasOwnProperty("coord")){
             weather.latitude = raw["coord"]["lat"];
@@ -166,7 +165,7 @@ export class OpenWeatherService {
     }
     catch(ex)
     { 
-      console.log('Error getting weather.');
+      console.log('OpenWeatherService:WeatherError');
     }
   }
 

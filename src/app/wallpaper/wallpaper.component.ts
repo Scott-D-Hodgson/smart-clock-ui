@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenWeatherService } from '../services/open-weather.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-wallpaper',
@@ -9,14 +10,19 @@ import { OpenWeatherService } from '../services/open-weather.service';
 export class WallpaperComponent implements OnInit {
 
   _image : string;
+  _subscriptionWeather : Subscription;
 
   constructor(private openWeatherService : OpenWeatherService) { 
-    this.openWeatherService.WeatherChange.subscribe(value => {
+    this._subscriptionWeather = this.openWeatherService.WeatherChange.subscribe(value => {
       this._image = this.getImageUrl(value.id);
-      console.log('Wallpaper Component got results!');
-    });}
+      console.log('WallpaperComponent:Updated');
+    });
+  }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngOnDestroy() {
+    this._subscriptionWeather.unsubscribe();
   }
 
   private getImageUrl (code : number) : string {

@@ -1,1 +1,3 @@
-<strong>{{ year + '-' + month + '-' + day }}</strong>
+<div *ngIf="_date">
+    <strong>{{ _date | date }}</strong>
+</div>    
