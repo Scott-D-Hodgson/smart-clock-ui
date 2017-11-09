@@ -18,6 +18,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { TimerPulseService } from './services/timer-pulse.service';
 import { DatePipe } from './pipes/date.pipe';
 import { MonthPipe } from './pipes/month.pipe';
+import { CalendarService } from './services/calendar.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { MonthPipe } from './pipes/month.pipe';
     BrowserModule,
     HttpModule
   ],
-  providers: [TimerPulseService, ConfigurationService, OpenWeatherService, TheySaidSoService],
+  providers: [TimerPulseService, ConfigurationService, CalendarService, OpenWeatherService, TheySaidSoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,18 +1,31 @@
-.cal-row {
-    border-style: solid;
-    border-width: 0px;
-    border-color: white;
+table {
     padding: 0px;
     margin: 0px;
     width: 100%;
 }
-.cal-1 {
+
+th {
+    text-align: center;
+}
+
+td {
     border-style: solid;
-    border-width: 0px;
-    border-color: blue;
-    padding: 0px;
-    margin: 0px;
-    display: inline-block;
-    min-width: 12%;
-    max-width: 12%;
+    border-color: white;
+    border-width: 1px;
+    color: grey;
+}
+
+td.month {
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+}
+
+td.today {
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    color: black;
+    background-color: white;
 }
