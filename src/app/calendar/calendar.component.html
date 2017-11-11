@@ -1,5 +1,5 @@
 <div *ngIf="_calendar">
-  <h2></h2>
+  <h2>{{ _date | month }}</h2>
   <table>
     <thead>
       <th>S</th>
@@ -11,7 +11,11 @@
       <th>S</th>
     </thead>
     <tr *ngFor="let row of _calendar">
-        <td *ngFor="let day of row" class="{{ getClass(day) }}">{{ day.date.getDate() }}</td>
+        <td *ngFor="let day of row" class="{{ getClass(day) }}">
+          <div class="{{ getClass(day) }}">
+            {{ day.date.getDate() }}
+          </div>
+        </td>
     </tr>
   </table>
 </div>

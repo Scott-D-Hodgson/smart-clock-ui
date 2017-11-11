@@ -8,39 +8,34 @@ import { TimerPulseService } from './timer-pulse.service';
 export class CalendarService {
 
   public _calendar : CalendarDay[][];
-  private _date : Date;
+  public _today : Date;
   private _monthStart : Date;
   private _monthEnd : Date;
   private _calendarStart : Date;
   private _calendarEnd : Date;  
-  private _subscriptionMinute: Subscription;
+  private _subscriptionDay: Subscription;
   private _subscriptionCalendar: Subscription;
   CalendarChange: Subject<boolean> = new Subject<boolean>();
 
   constructor(private timerPulseService : TimerPulseService) {
-    this._date = new Date();
-    console.log("CalendarService:DateUpdated->" + this._date.toLocaleDateString());
-    this._subscriptionMinute = this.timerPulseService.MinuteChange.subscribe(value => {
-      this._date = new Date();
-      this.CalculateRange();
-      console.log("CalendarService:DateUpdated->" + this._date.toLocaleDateString());
-    });
-    this._subscriptionCalendar = this.CalendarChange.subscribe(value => {
-      console.log("CalendarService:CalendarUpdated");
-    });
+    this._today = new Date();
     this.CalculateRange();
+    this._subscriptionDay = this.timerPulseService.DayChange.subscribe(value => {
+      this._today = new Date();
+      this.CalculateRange();
+    });
   }
 
   ngOnDestroy() {
-    this._subscriptionMinute.unsubscribe();
+    this._subscriptionDay.unsubscribe();
     this._subscriptionCalendar.unsubscribe();
   }
 
   private CalculateRange() {
-    this._monthStart = new Date(this._date.getFullYear(), this._date.getMonth(), 1);
-    this._monthEnd = new Date(this._date.getFullYear(), this._date.getMonth() + 1, 0);
-    this._calendarStart = new Date(this._date.getFullYear(), this._date.getMonth(), (this._monthStart.getDay() - 5));
-    this._calendarEnd = new Date(this._date.getFullYear(), this._date.getMonth() + 1, (6 - this._monthEnd.getDay()));
+    this._monthStart = new Date(this._today.getFullYear(), this._today.getMonth(), 1);
+    this._monthEnd = new Date(this._today.getFullYear(), this._today.getMonth() + 1, 0);
+    this._calendarStart = new Date(this._today.getFullYear(), this._today.getMonth(), (this._monthStart.getDay() - 5));
+    this._calendarEnd = new Date(this._today.getFullYear(), this._today.getMonth() + 1, (6 - this._monthEnd.getDay()));
     let days : number = this._monthStart.getDay() + this._monthEnd.getDate() + (6 - this._monthEnd.getDay());    
     let calendar : CalendarDay[][] = []; 
     let date : Date = this._calendarStart;
@@ -53,9 +48,9 @@ export class CalendarService {
         calendarDay.activeDay = 
           (
             (
-              (date.getFullYear() == this._date.getFullYear()) && 
-              (date.getMonth() == this._date.getMonth()) && 
-              (date.getDate() == this._date.getDate())
+              (date.getFullYear() == this._today.getFullYear()) && 
+              (date.getMonth() == this._today.getMonth()) && 
+              (date.getDate() == this._today.getDate())
             )
           );
         calendarDay.activeMonth = ((date >= this._monthStart) && (date <= this._monthEnd));

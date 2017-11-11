@@ -10,15 +10,16 @@ import { CalendarService } from '../services/calendar.service';
 })
 export class CalendarComponent implements OnInit {
 
+  private _date : Date;
   private _calendar : CalendarDay[][];
   private _subscriptionCalendar : Subscription;
   
   constructor(private calendarService : CalendarService) {
-    this._calendar = null;
+    this._date = new Date();
+    this._calendar = calendarService._calendar;
     this._subscriptionCalendar = this.calendarService.CalendarChange.subscribe(value => {
-      console.log("here");
       this._calendar = this.calendarService._calendar;
-      console.log("CalendarComponent:CalendarChanged");
+      this._date = this.calendarService._today;
     });    
   }
 

@@ -2,6 +2,18 @@ table {
     padding: 0px;
     margin: 0px;
     width: 100%;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;    
+}
+
+thead {
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 4px;
+    color: grey;
+    background-color: white;
 }
 
 th {
@@ -9,23 +21,20 @@ th {
 }
 
 td {
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
+    border-style: none;
     color: grey;
 }
 
 td.month {
-    border-style: solid;
-    border-color: white;
-    border-width: 1px;
+    border-style: none;
     color: white;
 }
 
-td.today {
+td div.today {
     border-style: solid;
     border-color: white;
     border-width: 1px;
-    color: black;
+    border-radius: 4px;
+    color: grey;
     background-color: white;
 }
