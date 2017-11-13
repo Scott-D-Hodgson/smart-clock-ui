@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { Http, Response } from '@angular/http';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Subscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class TheySaidSoService {
@@ -12,10 +13,10 @@ export class TheySaidSoService {
   public Quote : Quote;
   QuoteChange: Subject<Quote> = new Subject<Quote>();
 
-  constructor(private http : Http ) { 
+  constructor(private http : Http, private toastrService : ToastrService) { 
     this.QuoteChange.subscribe(value => {
       this.Quote = value;
-      console.log('Quote Changed');
+      this.toastrService.info("Quote changed", "They Said So Service");
     });   
     let timer = TimerObservable.create(0, 3600000);
     this.subscription = timer.subscribe(t => {
@@ -63,7 +64,7 @@ export class TheySaidSoService {
     }
     catch(ex)
     { 
-      console.log('Error getting quote.');
+      this.toastrService.error("Unable to get quote", "They Said So Service");
     }
   }
 

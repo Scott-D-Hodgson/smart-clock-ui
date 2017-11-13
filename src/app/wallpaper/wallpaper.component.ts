@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenWeatherService } from '../services/open-weather.service';
 import { Subscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wallpaper',
@@ -12,10 +13,10 @@ export class WallpaperComponent implements OnInit {
   _image : string;
   _subscriptionWeather : Subscription;
 
-  constructor(private openWeatherService : OpenWeatherService) { 
+  constructor(private openWeatherService : OpenWeatherService, private toastrService : ToastrService) { 
     this._subscriptionWeather = this.openWeatherService.WeatherChange.subscribe(value => {
       this._image = this.getImageUrl(value.id);
-      console.log('WallpaperComponent:Updated');
+      this.toastrService.info("Updated", "Wallpaper Component"); 
     });
   }
 
@@ -26,7 +27,6 @@ export class WallpaperComponent implements OnInit {
   }
 
   private getImageUrl (code : number) : string {
-    console.log("Wallpaper Weather Code: " + code)
     let imageFilename : string = "";
     switch (code) {
       case 200: // Thunderstorm with light rain

@@ -19,6 +19,9 @@ import { TimerPulseService } from './services/timer-pulse.service';
 import { DatePipe } from './pipes/date.pipe';
 import { MonthPipe } from './pipes/month.pipe';
 import { CalendarService } from './services/calendar.service';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { CalendarService } from './services/calendar.service';
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [TimerPulseService, ConfigurationService, CalendarService, OpenWeatherService, TheySaidSoService],
   bootstrap: [AppComponent]

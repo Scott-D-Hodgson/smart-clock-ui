@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class TimerPulseService {
@@ -17,7 +18,7 @@ export class TimerPulseService {
   HourChange: Subject<number> = new Subject<number>();  
   MinuteChange: Subject<number> = new Subject<number>(); 
 
-  constructor() {
+  constructor(private toastrService : ToastrService) {
     let date = new Date();
     this._day = date.getDate();
     this._hour = date.getHours();
@@ -28,15 +29,15 @@ export class TimerPulseService {
     });
     this._subscriptionDay = this.DayChange.subscribe(value => {
       this._day = value;
-      console.log('TimerPulseService:DayChanged->' + value);
+      this.toastrService.info("Day changed", "Timer Pulse Service");
     });    
     this._subscriptionHour = this.HourChange.subscribe(value => {
       this._hour = value;
-      console.log('TimerPulseService:HourChanged->' + value);
+      this.toastrService.info("Hour changed", "Timer Pulse Service");
     });
     this._subscriptionMinute = this.MinuteChange.subscribe(value => {
       this._minute = value;
-      console.log('TimerPulseService:MinuteChanged->' + value);
+      this.toastrService.info("Minute changed", "Timer Pulse Service");
     });
   }
 

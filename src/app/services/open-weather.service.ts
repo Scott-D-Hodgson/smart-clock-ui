@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { Weather } from '../model/weather';
 import { Subscription } from 'rxjs/Subscription';
 import { TimerPulseService } from './timer-pulse.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class OpenWeatherService {
@@ -18,18 +19,18 @@ export class OpenWeatherService {
   ForecastChange: Subject<Forecast[]> = new Subject<Forecast[]>();
   WeatherChange: Subject<Weather> = new Subject<Weather>();
 
-  constructor(private configurationService : ConfigurationService, private timerPulseService : TimerPulseService, private http : Http ) { 
+  constructor(private configurationService : ConfigurationService, private timerPulseService : TimerPulseService, private http : Http, private toastrService : ToastrService ) { 
     this.ForecastChange.subscribe(value => {
       this._forecast = value;
-      console.log('OpenWeatherService:ForecastChanged');
+      this.toastrService.info("Forecast Updated", "Open Weather Service");
     });   
     this.WeatherChange.subscribe(value => {
       this._weather = value;
-      console.log('OpenWeatherService:WeatherChanged');
+      this.toastrService.info("Weather Updated", "Open Weather Service");
     });     
     this.configurationService.OpenWeatherKeyChange.subscribe(value => {
       this._key = value;
-      console.log('OpenWeatherService:KeyChanged->' + value);
+      this.toastrService.info("Api Key Updated", "Open Weather Service");
       this.updateWeather();
       this._subscriptionHour = timerPulseService.HourChange.subscribe(value => {
         this.updateWeather();
@@ -108,7 +109,7 @@ export class OpenWeatherService {
     }
     catch(ex)
     { 
-      console.log('OpenWeatherService:ForecastError');
+      this.toastrService.error("Unable to get forecast", "Open Weather Service");
     }
   }
 
@@ -165,7 +166,7 @@ export class OpenWeatherService {
     }
     catch(ex)
     { 
-      console.log('OpenWeatherService:WeatherError');
+      this.toastrService.error("Unable to get weather", "Open Weather Service");
     }
   }
 

@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 //import { Observable } from 'rxjs/Observable';
 import { Configuration } from '../model/configuration';
 import { Subject } from 'rxjs/Subject';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ConfigurationService {
@@ -10,10 +11,10 @@ export class ConfigurationService {
   public OpenWeatherKey : string;
   OpenWeatherKeyChange: Subject<string> = new Subject<string>();
 
-  constructor(private http: Http) { 
+  constructor(private http: Http, private toastrService : ToastrService) { 
     this.OpenWeatherKeyChange.subscribe(value => {
       this.OpenWeatherKey = value;
-      console.log('Configuration Service got value: ' + value);
+      this.toastrService.error("Got Open Weather Api Key", "Configuration Service");
     });
     this.getConfiguration();
   }
@@ -30,7 +31,7 @@ export class ConfigurationService {
     }
     catch(ex)
     {
-      console.log('Error getting config.');
+      this.toastrService.error("Unable to get configuration", "Configuration Service");
     }
   }
 }
