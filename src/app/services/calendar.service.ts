@@ -39,7 +39,6 @@ export class CalendarService {
     let days : number = this._monthStart.getDay() + this._monthEnd.getDate() + (6 - this._monthEnd.getDay());    
     let calendar : CalendarDay[][] = []; 
     let date : Date = this._calendarStart;
-    console.log(days / 7);
     for (let i : number = 0; i < (days / 7); i++) {
       let week : CalendarDay[] = [];
       for (let j : number = 0; j < 7; j++) {

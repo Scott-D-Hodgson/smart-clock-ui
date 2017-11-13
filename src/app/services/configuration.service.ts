@@ -14,7 +14,7 @@ export class ConfigurationService {
   constructor(private http: Http, private toastrService : ToastrService) { 
     this.OpenWeatherKeyChange.subscribe(value => {
       this.OpenWeatherKey = value;
-      this.toastrService.error("Got Open Weather Api Key", "Configuration Service");
+      this.toastrService.info("Got Open Weather Api Key", "Configuration Service");
     });
     this.getConfiguration();
   }

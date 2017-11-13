@@ -42,7 +42,12 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     HttpModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({ 
+      maxOpened: 1,
+      timeOut: 10000,
+      positionClass: 'toast-bottom-center',
+      preventDuplicates: true,
+    })
   ],
   providers: [TimerPulseService, ConfigurationService, CalendarService, OpenWeatherService, TheySaidSoService],
   bootstrap: [AppComponent]
