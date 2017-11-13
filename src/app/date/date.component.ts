@@ -12,8 +12,6 @@ export class DateComponent implements OnInit {
 
   private _date: Date; 
   private _subscriptionDay: Subscription;
-  private _subscriptionHour: Subscription;
-  private _subscriptionCalendar: Subscription;
 
   constructor(private timerPulseService : TimerPulseService, private calendarService : CalendarService) {
     this._date = new Date();
