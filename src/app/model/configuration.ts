@@ -1,5 +1,5 @@
 export interface Configuration {
-    keys : {
-        openWeather : string;
+    openWeather : {
+        key : string;
     }
 }

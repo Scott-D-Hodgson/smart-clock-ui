@@ -8,14 +8,10 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class ConfigurationService {
 
-  public OpenWeatherKey : string;
+  public _config : object;
   OpenWeatherKeyChange: Subject<string> = new Subject<string>();
 
   constructor(private http: Http, private toastrService : ToastrService) { 
-    this.OpenWeatherKeyChange.subscribe(value => {
-      this.OpenWeatherKey = value;
-      this.toastrService.info("Got Open Weather Api Key", "Configuration Service");
-    });
     this.getConfiguration();
   }
 
@@ -25,8 +21,8 @@ export class ConfigurationService {
     try
     {
       this.http.get(url).subscribe((value: Response) => {
-        result = <Configuration>value.json();
-        this.OpenWeatherKeyChange.next(result.keys.openWeather);
+        this._config = <Configuration>value.json();
+        this.OpenWeatherKeyChange.next(this._config["openWeather"]["key"]);
       });
     }
     catch(ex)
